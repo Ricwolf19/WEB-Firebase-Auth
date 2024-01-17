@@ -1,8 +1,17 @@
 import {Routes, Route} from 'react-router-dom';
+import { Home } from './Components/Home';
+import { Login } from './Components/Login';
+import { SignUp } from './Components/SignUp';
 
 function App() {
   return ( 
-   <h1>Hello World</h1>
+    <Routes>
+
+    <Route path='/' element={<Home/>} />
+    <Route path='/login' element={<Login/>} />
+    <Route path='/SignUp' element={<SignUp/>} />
+
+    </Routes>
    );
 }
 
