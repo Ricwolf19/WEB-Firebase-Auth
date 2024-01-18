@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useAuth } from "../context/authContext";
-import { useNavigate } from "react-router-dom";
+//import { useNavigate } from "react-router-dom";
 
 export function SignUp() {
   const [user, setUser] = useState({ //Se exporta un useState para poder guardar el email y el password del usuario
@@ -9,7 +9,7 @@ export function SignUp() {
   })
 
   const { signUp } = useAuth();
-  const navigate = useNavigate();
+ // const navigate = useNavigate();
   const [error, setError] = useState();
 
   const handleChange = ({ target: { name, value } }) => { //Funcion para actualizar el estado
@@ -24,7 +24,7 @@ export function SignUp() {
     setError('')
     try { //El try se utiliza para poder registrarse y despues navegar hacia el home con navigate de react-router-dom
       await signUp(user.email, user.password)  //TODA PETICION HACIA UN BACKEND ES ASYNCRONO(Se ejecuta simultaneamente)
-      navigate('/') //Redireccion a HOME
+     // navigate('/') //Redireccion a HOME
     } catch (error) {
      // console.log(error.code)
       setError(error.message);
