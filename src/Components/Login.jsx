@@ -10,7 +10,7 @@ export function Login() {
     password: ''
   })
 
-  const { login, loginWithGoogle } = useAuth(); //Se exporta login para poder logearse en la web
+  const { login, loginWithGoogle, resetPassword } = useAuth(); //Se exporta login para poder logearse en la web
   //const navigate = useNavigate();
   const [error, setError] = useState();
 
@@ -41,6 +41,16 @@ export function Login() {
     }
   }
 
+  const handleResetPassword = async () => { //Funcion asyncrona para poder recuperar la contrasenia
+    if (!user.email) return setError('Please enter your email')
+    try {
+      await resetPassword(user.email)
+      setError('We sent you an email with a link to reset your password');
+    } catch (error) {
+      setError(error.mesagge)
+    }
+  }
+
   return ( //Se hace un form para poder ingresar los datos del usuario, (Importante name y onChange)
     <div className="w-full max-w-xs m-auto">
 
@@ -68,10 +78,12 @@ export function Login() {
             placeholder="******"
             className=" shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             onChange={handleChange} />
-
         </div>
 
-        <button className="bg-blue-500 hover:bg-blue-700 text-white text-sm font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Login</button>
+        <div className="flex items-center justify-between">
+          <button className="bg-blue-500 hover:bg-blue-700 text-white text-sm font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Login</button>
+          <a href="#!" className=" inline-block align-baseline font-bold text-blue-500 text-sm hover:text-blue-800" onClick={handleResetPassword}>Forgot Password</a>
+        </div>
       </form>
 
       <p className="my-4 text-sm flex justify-between px-4">Don't have an account?<Link to={'/signUp'}>Register</Link></p>

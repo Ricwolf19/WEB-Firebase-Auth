@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, GoogleAuthProvider, signInWithPopup /*Dispara evento de estado Ejem: cierra o abre sesion el user*/ } from "firebase/auth"; //Se exporta esta funcion que nos permite interactuar con firebase
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, GoogleAuthProvider, signInWithPopup, sendPasswordResetEmail /*Dispara evento de estado Ejem: cierra o abre sesion el user*/ } from "firebase/auth"; //Se exporta esta funcion que nos permite interactuar con firebase
 import { auth, db } from '../Firebase'
 import { doc, setDoc, getDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
@@ -53,6 +53,9 @@ export function AuthProvider({ children }) { //Funcion para la autenticacion y d
         return signInWithPopup(auth, googleProvider)
     }
 
+    const resetPassword = (email) => sendPasswordResetEmail(auth, email)
+
+
     useEffect(() => { //Cuando el usuario esta logerado esta funcion devuelve el objeto entero
         const unsuscribe = onAuthStateChanged(auth, currenUser => { //Estamos a travez de esta funcion onAuthStateChanged escuchando si el usuario esta logeado o no
             setUser(currenUser)          //console.log(currenUser) //Se almacenara para que los otros componentes puedan usarlo/
@@ -64,7 +67,7 @@ export function AuthProvider({ children }) { //Funcion para la autenticacion y d
     }, [])
 
     return (
-        <authContext.Provider value={{ signUp, login, user, logOut, loading, loginWithGoogle }}>
+        <authContext.Provider value={{ signUp, login, user, logOut, loading, loginWithGoogle, resetPassword }}>
             {children}
         </authContext.Provider>  //Se retorna el valor del objeto user y su hijo en un contexto
     )
