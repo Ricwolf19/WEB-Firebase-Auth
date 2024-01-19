@@ -4,16 +4,17 @@ import { Login } from './Components/Login';
 import { SignUp } from './Components/SignUp';
 import { AuthProvider } from "./context/authContext"; //Se da el contexto
 import { AdminView } from './Components/AdminView';
+import { ProtectedRoute } from './Components/ProtectedRoute';
 
 function App() {
   return (
     <div className="bg-slate-300 h-screen text-black flex">
-      <AuthProvider> 
+      <AuthProvider>
         <Routes>
-          <Route path='/' element={<Home />} />
+          <Route path='/' element={<ProtectedRoute> <Home /> </ProtectedRoute>} /> {/*Adentro de el componente ProtectedRoute proteje todas las rutas para usuarios no logeados*/}
           <Route path='/login' element={<Login />} />
           <Route path='/signUp' element={<SignUp />} />
-          <Route path='/adminView' element={<AdminView />} />
+          <Route path='/adminView' element={<ProtectedRoute> <AdminView /> </ProtectedRoute>} />
         </Routes>
       </AuthProvider>
     </div>

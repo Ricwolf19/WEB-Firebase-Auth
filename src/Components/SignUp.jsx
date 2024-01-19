@@ -9,7 +9,7 @@ export function SignUp() {
   })
 
   const { signUp } = useAuth();
- // const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [error, setError] = useState();
 
   const handleChange = ({ target: { name, value } }) => { //Funcion para actualizar el estado
@@ -24,37 +24,37 @@ export function SignUp() {
     setError('')
     try { //El try se utiliza para poder registrarse y despues navegar hacia el home con navigate de react-router-dom
       await signUp(user.email, user.password)  //TODA PETICION HACIA UN BACKEND ES ASYNCRONO(Se ejecuta simultaneamente)
-     // navigate('/') //Redireccion a HOME
+      // navigate('/') //Redireccion a HOME
     } catch (error) {
-     // console.log(error.code)
+      // console.log(error.code)
       setError(error.message);
     }
   }
 
   return ( //Se hace un form para poder ingresar los datos del usuario, (Importante name y onChange)
-  <div>
+    <div>
 
-  {error && <p>{error}</p>} {/*Asi se lanza el error a pantalla si hay*/}
+      {error && <p>{error}</p>} {/*Asi se lanza el error a pantalla si hay*/}
 
-    <form onSubmit={handleSubmit}>
-      <label htmlFor="email">Email</label>
-      <input
-        type="email"
-        name="email"
-        placeholder="yourEmail@gmail.ltd"
-        onChange={handleChange} />
+      <form onSubmit={handleSubmit}>
+        <label htmlFor="email">Email</label>
+        <input
+          type="email"
+          name="email"
+          placeholder="yourEmail@gmail.ltd"
+          onChange={handleChange} />
 
-      <label htmlFor="password">Password</label>
-      <input
-        type="password"
-        name="password" //Si el nombre es diferente que los demas datos se toma como extra y error (BUG) (TENER TODO IGUAL)
-        id="password"
-        placeholder="******"
-        onChange={handleChange} />
+        <label htmlFor="password">Password</label>
+        <input
+          type="password"
+          name="password" //Si el nombre es diferente que los demas datos se toma como extra y error (BUG) (TENER TODO IGUAL)
+          id="password"
+          placeholder="******"
+          onChange={handleChange} />
 
-      <button>Register</button>
+        <button>Register</button>
 
-    </form>
-  </div>
+      </form>
+    </div>
   )
 }
