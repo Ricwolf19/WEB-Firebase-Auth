@@ -26,7 +26,7 @@ export function Crud() {
 
     //Funcion para crear un usuario con los parametros que elegimos
     const handleCreate = async () => {
-        await addDoc(value, { firsName: fname, lastName: lname })
+        await addDoc(value, { firstName: fname, lastName: lname })
     }
 
     //Funcion para borrar un usuario con parametro de id
@@ -37,16 +37,16 @@ export function Crud() {
 
     //Funcion para poder reactualizar el formulario y con reutilizar el mismo, asi no teniendo que crear otro
     //Asignando a la vez el id y los nombres a los mismos inputs para corregir y cambiando el boton de crear por update
-    const handleEdit = async(id, firstName, lastName) => {
+    const handleEdit = async (id, firstName, lastName) => {
         setFName(firstName);
         setLName(lastName);
         setId(id);
         setShow(true);
     }
 
-    const handleUpdate = async()=> {
+    const handleUpdate = async () => {
         const updateData = doc(db, "patients", id);
-        await updateDoc(updateData, {firstName: fname, lastName: lname});
+        await updateDoc(updateData, { firstName: fname, lastName: lname });
         setShow(false);
     }
 
@@ -70,13 +70,13 @@ export function Crud() {
                 className="max-w-[220px] pb-5"
             />
 
-            {!show?<Button onClick={handleCreate} radius="full" className=" bg-gradient-to-tr from-pink-500 to-yellow-500 text-white shadow-lg">
+            {!show ? <Button onClick={handleCreate} radius="full" className=" bg-gradient-to-tr from-pink-500 to-yellow-500 text-white shadow-lg">
                 Create Patient
             </Button>
-        :
-            <Button onClick={handleUpdate} radius="full" className=" bg-gradient-to-tr  from-blue-500 text-white shadow-lg">
-                Update Patient
-            </Button> }
+                :
+                <Button onClick={handleUpdate} radius="full" className=" bg-gradient-to-tr  from-blue-500 text-white shadow-lg">
+                    Update Patient
+                </Button>}
 
             <h1 className="pb-5 pt-5 text-2xl text-red-700">The patients are: </h1>
             {
@@ -93,7 +93,6 @@ export function Crud() {
                     </div>
                 )
             }
-
         </div>
     )
 }
