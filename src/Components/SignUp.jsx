@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useAuth } from "../context/authContext";
 import { Alert } from "./Alert";
 import { Link } from "react-router-dom";
+// import ReCAPTCHA from "react-google-recaptcha";
 //import { useNavigate } from "react-router-dom";
 
 export function SignUp() {
@@ -63,6 +64,8 @@ export function SignUp() {
             onChange={handleChange} />
 
         </div>
+
+        {/*<ReCAPTCHA></ReCAPTCHA>*/}
 
         <button className="bg-blue-500 hover:bg-blue-700 text-white text-sm font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Register</button>
 
