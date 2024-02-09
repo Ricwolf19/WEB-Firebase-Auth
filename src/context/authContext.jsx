@@ -6,13 +6,12 @@ import { useNavigate } from "react-router-dom";
 
 
 export const authContext = createContext(); //Se exporta el contexto en una variable la cual ya este creado
-
-
 export const useAuth = () => { //Se pasa el contenido a useAuth para asi poder usar el contexto
     const context = useContext(authContext)
     if (!context) throw new Error('There is not auth provider') //Si no hay contexto tirar el error
     return context
 }
+
 
 export function AuthProvider({ children }) { //Funcion para la autenticacion y dar validacion a todos los hijos de este funcion
     const navigate = useNavigate(); //Muy importante ver que este adentro de el componente donde se vaya a usar solamente ya que ese es su scope por cada componente

@@ -1,18 +1,19 @@
-import { useState } from "react";
+import { useState } from "react"; //UserRef nos permite atravez de la referencia de un componente obtener el valor que nos devuelve el mismo componente (Vacio)
 import { useAuth } from "../context/authContext";
 import { Alert } from "./Alert";
 import { Link } from "react-router-dom";
-// import ReCAPTCHA from "react-google-recaptcha";
+import ReCAPTCHA from "react-google-recaptcha";
 //import { useNavigate } from "react-router-dom";
 
 export function SignUp() {
+  const [captchaToken, setCaptchaToken] = useState(null);
   const [user, setUser] = useState({ //Se exporta un useState para poder guardar el email y el password del usuario
     email: '',
     password: ''
   })
 
+  const siteKey = "6LdPmGwpAAAAANHjG3BVHr1DPtqodRh-bL4K6DTd"
   const { signUp } = useAuth();
-  // const navigate = useNavigate();
   const [error, setError] = useState();
 
   const handleChange = ({ target: { name, value } }) => { //Funcion para actualizar el estado
@@ -21,11 +22,16 @@ export function SignUp() {
     setUser({ ...user, [name]: value }) //Se tiene adentro de {Por que es un objeto el usuario}
   } //Se hace una funcion con cambio
 
+  const handleCaptchaChange = (token) => { //Tambien se puede hacer simplemente poniendo un valor en () y consologeando ese mismo valor en la funcion
+    setCaptchaToken(token);
+  };
+
   //Para que funcione el await tiene que tener la palabra clave asyn en la funcion para indicar asyncrono y ejecutar acciones asyncronicas
   const handleSubmit = async e => { //Funcion para ver que es lo que tiene el estado
     e.preventDefault()
     setError('')
     try { //El try se utiliza para poder registrarse y despues navegar hacia el home con navigate de react-router-dom
+      if (!captchaToken) throw new Error("The captcha is necesary");
       await signUp(user.email, user.password)  //TODA PETICION HACIA UN BACKEND ES ASYNCRONO(Se ejecuta simultaneamente)
       // navigate('/') //Redireccion a HOME
     } catch (error) {
@@ -65,7 +71,14 @@ export function SignUp() {
 
         </div>
 
-        {/*<ReCAPTCHA></ReCAPTCHA>*/}
+        <div className="pl-[20%] mt-4 w-full md:w-3/4 lg:w-1/2">
+          <ReCAPTCHA
+            sitekey={siteKey}
+            onChange={handleCaptchaChange}
+            size="compact"
+            theme="dark"
+          />
+        </div>
 
         <button className="bg-blue-500 hover:bg-blue-700 text-white text-sm font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Register</button>
 
