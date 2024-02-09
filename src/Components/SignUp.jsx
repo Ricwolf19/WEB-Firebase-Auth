@@ -27,19 +27,27 @@ export function SignUp() {
   };
 
   //Para que funcione el await tiene que tener la palabra clave asyn en la funcion para indicar asyncrono y ejecutar acciones asyncronicas
-  const handleSubmit = async e => { //Funcion para ver que es lo que tiene el estado
-    e.preventDefault()
-    setError('')
-    try { //El try se utiliza para poder registrarse y despues navegar hacia el home con navigate de react-router-dom
-      if (!captchaToken) throw new Error("The captcha is necesary");
-      await signUp(user.email, user.password)  //TODA PETICION HACIA UN BACKEND ES ASYNCRONO(Se ejecuta simultaneamente)
-      // navigate('/') //Redireccion a HOME
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
+  
+    try {
+      if (!captchaToken) {
+        throw new Error("The captcha is necessary");
+      }
+  
+      await signUp(user.email, user.password);
     } catch (error) {
-      // console.log(error.code)
-      setError(error.message);
+      console.error("Signup Error:", error.code, error.message);
+  
+      if (error.code === "auth/email-already-in-use") {
+        setError("Email address is already in use.");
+      } else {
+        setError(error.message);
+      }
     }
-  }
-
+  };
+  
   return ( //Se hace un form para poder ingresar los datos del usuario, (Importante name y onChange)
     <div className="w-full max-w-xs m-auto">
 

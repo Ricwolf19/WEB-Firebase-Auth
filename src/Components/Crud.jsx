@@ -22,18 +22,18 @@ export function Crud() {
             setVal(dbVal.docs.map(doc => ({ ...doc.data(), id: doc.id })))
         }
         getData()
-    })
+    });
 
     //Funcion para crear un usuario con los parametros que elegimos
     const handleCreate = async () => {
         await addDoc(value, { firstName: fname, lastName: lname })
-    }
+    };
 
     //Funcion para borrar un usuario con parametro de id
     const handleDelete = async (id) => {
         const deleteVal = doc(db, "patients", id)
         await deleteDoc(deleteVal)
-    }
+    };
 
     //Funcion para poder reactualizar el formulario y con reutilizar el mismo, asi no teniendo que crear otro
     //Asignando a la vez el id y los nombres a los mismos inputs para corregir y cambiando el boton de crear por update
@@ -42,13 +42,13 @@ export function Crud() {
         setLName(lastName);
         setId(id);
         setShow(true);
-    }
+    };
 
     const handleUpdate = async () => {
         const updateData = doc(db, "patients", id);
         await updateDoc(updateData, { firstName: fname, lastName: lname });
         setShow(false);
-    }
+    };
 
     return (
         <div className="text-center">
@@ -92,7 +92,7 @@ export function Crud() {
                         <br /><br />
                     </div>
                 )
-            }
+            };
         </div>
-    )
-}
+    );
+};
